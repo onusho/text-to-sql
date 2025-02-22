@@ -1,0 +1,492 @@
+{
+    "database_name": "paglia",
+    "description": "A database for managing a DVD rental store.",
+    "tables": [
+      {
+        "table_name": "actor",
+        "description": "Stores information about actors.",
+        "columns": [
+          {"column_name": "actor_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the actor."},
+          {"column_name": "first_name", "data_type": "text", "description": "Actor's first name."},
+          {"column_name": "last_name", "data_type": "text", "description": "Actor's last name."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+        ]
+      },
+      {
+        "table_name": "address",
+        "description": "Stores address information.",
+        "columns": [
+          {"column_name": "address_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the address."},
+          {"column_name": "address", "data_type": "text", "description": "Street address."},
+          {"column_name": "address2", "data_type": "text", "description": "Additional street address information."},
+          {"column_name": "district", "data_type": "text", "description": "District the address is located in."},
+          {"column_name": "city_id", "data_type": "integer", "description": "Foreign key referencing the city table."},
+          {"column_name": "postal_code", "data_type": "text", "description": "Postal code of the address."},
+          {"column_name": "phone", "data_type": "text", "description": "Phone number associated with the address."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+        ]
+      },
+      {
+        "table_name": "category",
+        "description": "Stores information about film categories.",
+        "columns": [
+          {"column_name": "category_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the category."},
+          {"column_name": "name", "data_type": "text", "description": "Name of the category."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+        ]
+      },
+      {
+        "table_name": "city",
+        "description": "Stores information about cities.",
+        "columns": [
+          {"column_name": "city_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the city."},
+          {"column_name": "city", "data_type": "text", "description": "Name of the city."},
+          {"column_name": "country_id", "data_type": "integer", "description": "Foreign key referencing the country table."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+        ]
+      },
+      {
+        "table_name": "country",
+        "description": "Stores information about countries.",
+        "columns": [
+          {"column_name": "country_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the country."},
+          {"column_name": "country", "data_type": "text", "description": "Name of the country."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+        ]
+      },
+      {
+        "table_name": "customer",
+        "description": "Stores information about customers.",
+        "columns": [
+          {"column_name": "customer_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the customer."},
+          {"column_name": "store_id", "data_type": "integer", "description": "Foreign key referencing the store table."},
+          {"column_name": "first_name", "data_type": "text", "description": "Customer's first name."},
+          {"column_name": "last_name", "data_type": "text", "description": "Customer's last name."},
+          {"column_name": "email", "data_type": "text", "description": "Customer's email address."},
+          {"column_name": "address_id", "data_type": "integer", "description": "Foreign key referencing the address table."},
+          {"column_name": "activebool", "data_type": "boolean", "description": "Indicates whether the customer is active."},
+          {"column_name": "create_date", "data_type": "date", "description": "Date when the customer record was created."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."},
+          {"column_name": "active", "data_type": "integer", "description": "Another column indicating customer activity status (might be redundant)."}
+        ]
+      },
+      {
+        "table_name": "film",
+        "description": "Stores information about films.",
+        "columns": [
+          {"column_name": "film_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the film."},
+          {"column_name": "title", "data_type": "text", "description": "Title of the film."},
+          {"column_name": "description", "data_type": "text", "description": "Description of the film's plot."},
+          {"column_name": "release_year", "data_type": "year", "description": "Year when the film was released."},
+          {"column_name": "language_id", "data_type": "integer", "description": "Foreign key referencing the language table."},
+          {"column_name": "original_language_id", "data_type": "integer", "description": "Foreign key referencing the language table for the original language (if different)."},
+          {"column_name": "rental_duration", "data_type": "smallint", "description": "Duration for which the film can be rented."},
+          {"column_name": "rental_rate", "data_type": "numeric(4,2)", "description": "Rate at which the film can be rented."},
+          {"column_name": "length", "data_type": "smallint", "description": "Length of the film in minutes."},
+          {"column_name": "replacement_cost", "data_type": "numeric(5,2)", "description": "Cost to replace the film if lost or damaged."},
+          {"column_name": "rating", "data_type": "mpaa_rating", "description": "MPAA rating of the film."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."},
+          {"column_name": "special_features", "data_type": "text[]", "description": "Array of special features included with the film."},
+          {"column_name": "fulltext", "data_type": "tsvector", "description": "Full-text search vector for the film."}
+        ]
+      },
+      {
+        "table_name": "film_actor",
+        "description": "Links actors to films they starred in.",
+        "columns": [
+          {"column_name": "actor_id", "data_type": "integer", "is_primary_key": true, "is_foreign_key": true, "description": "Foreign key referencing the actor table."},
+          {"column_name": "film_id", "data_type": "integer", "is_primary_key": true, "is_foreign_key": true, "description": "Foreign key referencing the film table."},
+          {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+        ]
+      },
+      {
+        "table_name": "film_category",
+        "description": "Links films to their categories.",
+        "columns": [
+          {"column_name": "film_id", "data_type": "integer", "is_primary_key": true, "is_foreign_key": true, "description": "Foreign key referencing the film table."},
+        {"column_name": "category_id", "data_type": "integer", "is_primary_key": true, "is_foreign_key": true, "description": "Foreign key referencing the category table."},
+        {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+      ]
+    },
+    {
+      "table_name": "inventory",
+      "description": "Stores information about the store's inventory of films.",
+      "columns": [
+        {"column_name": "inventory_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the inventory item."},
+        {"column_name": "film_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the film table."},
+        {"column_name": "store_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the store table."},
+        {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+      ]
+    },
+    {
+      "table_name": "language",
+      "description": "Stores information about languages.",
+      "columns": [
+        {"column_name": "language_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the language."},
+        {"column_name": "name", "data_type": "character(20)", "description": "Name of the language."},
+        {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+      ]
+    },
+    {
+      "table_name": "payment",
+      "description": "Stores information about customer payments.",
+      "columns": [
+        {"column_name": "payment_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the payment."},
+        {"column_name": "customer_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the customer table."},
+        {"column_name": "staff_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the staff table."},
+        {"column_name": "rental_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the rental table."},
+        {"column_name": "amount", "data_type": "numeric(5,2)", "description": "Amount of the payment."},
+        {"column_name": "payment_date", "data_type": "timestamp with time zone", "is_primary_key": true, "description": "Date and time of the payment."}
+      ]
+    },
+    {
+      "table_name": "rental",
+      "description": "Stores information about film rentals.",
+      "columns": [
+        {"column_name": "rental_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the rental transaction."},
+        {"column_name": "rental_date", "data_type": "timestamp with time zone", "description": "Date and time when the film was rented."},
+        {"column_name": "inventory_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the inventory table."},
+        {"column_name": "customer_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the customer table."},
+        {"column_name": "return_date", "data_type": "timestamp with time zone", "description": "Date and time when the film was returned (can be null)."},
+        {"column_name": "staff_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the staff table member who processed the rental."},
+        {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+      ]
+    },
+    {
+      "table_name": "staff",
+      "description": "Stores information about staff members.",
+      "columns": [
+        {"column_name": "staff_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the staff member."},
+        {"column_name": "first_name", "data_type": "text", "description": "Staff member's first name."},
+        {"column_name": "last_name", "data_type": "text", "description": "Staff member's last name."},
+        {"column_name": "address_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the address table."},
+        {"column_name": "email", "data_type": "text", "description": "Staff member's email address."},
+        {"column_name": "store_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the store table."},
+        {"column_name": "active", "data_type": "boolean", "description": "Indicates whether the staff member is currently active."},
+        {"column_name": "username", "data_type": "text", "description": "Staff member's username for system access."},
+        {"column_name": "password", "data_type": "text", "description": "Staff member's password for system access."},
+        {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."},
+        {"column_name": "picture", "data_type": "bytea", "description": "Staff member's picture (binary data)."}
+      ]
+    },
+    {
+      "table_name": "store",
+      "description": "Stores information about the physical stores.",
+      "columns": [
+        {"column_name": "store_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the store."},
+        {"column_name": "manager_staff_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the staff table for the store's manager."},
+        {"column_name": "address_id", "data_type": "integer", "is_foreign_key": true, "description": "Foreign key referencing the address table."},
+        {"column_name": "last_update", "data_type": "timestamp with time zone", "description": "Timestamp of the last update to the record."}
+      ]
+    }
+  ],
+  "views": [
+    {
+      "view_name": "actor_info",
+      "description": "Provides information about actors and the films they starred in, categorized by film category.",
+      "columns": [
+          {"column_name": "actor_id", "data_type": "integer", "is_primary_key": true, "description": "Unique identifier for the actor."},
+          {"column_name": "first_name", "data_type": "text", "description": "Actor's first name."},
+          {"column_name": "last_name", "data_type": "text", "description": "Actor's last name."},
+          {"column_name": "film_info", "data_type": "text", "description": "Concatenated string of film categories and film titles the actor has been in."}
+      ]
+    },
+    {
+      "view_name": "customer_list",
+      "description": "Provides a list of customers with their contact information and store association.",
+      "columns": [
+          {"column_name": "id", "data_type": "integer", "description": "Customer ID."},
+          {"column_name": "name", "data_type": "text", "description": "Customer's full name."},
+          {"column_name": "address", "data_type": "text", "description": "Customer's street address."},
+          {"column_name": "zip code", "data_type": "text", "description": "Customer's postal code."},
+          {"column_name": "phone", "data_type": "text", "description": "Customer's phone number."},
+          {"column_name": "city", "data_type":"text", "description": "Customer's city."},
+          {"column_name": "country", "data_type": "text", "description": "Customer's country."},
+          {"column_name": "notes", "data_type": "text", "description": "Notes about the customer (e.g., active status)."},
+          {"column_name": "sid", "data_type": "integer", "description": "Store ID associated with the customer."}
+      ]
+    },
+    {
+      "view_name": "film_list",
+      "description": "Provides a list of films with their descriptions, category, price, length, rating, and actors.",
+      "columns": [
+          {"column_name": "fid", "data_type": "integer", "description": "Film ID."},
+          {"column_name": "title", "data_type": "text", "description": "Film title."},
+          {"column_name": "description", "data_type": "text", "description": "Film description."},
+          {"column_name": "category", "data_type": "text", "description": "Film category."},
+          {"column_name": "price", "data_type": "numeric(4,2)", "description": "Rental price of the film."},
+          {"column_name": "length", "data_type": "smallint", "description": "Length of the film in minutes."},
+          {"column_name": "rating", "data_type": "mpaa_rating", "description": "MPAA rating of the film."},
+          {"column_name": "actors", "data_type": "text", "description": "Concatenated string of actors' first and last names."}
+      ]
+    },
+    {
+      "view_name": "nicer_but_slower_film_list",
+      "description": "Similar to film_list, but formats actor names with uppercase first letters and lowercase remaining letters.",
+      "columns": [
+          {"column_name": "fid", "data_type": "integer", "description": "Film ID."},
+          {"column_name": "title", "data_type": "text", "description": "Film title."},
+          {"column_name": "description", "data_type": "text", "description": "Film description."},
+          {"column_name": "category", "data_type": "text", "description": "Film category."},
+          {"column_name": "price", "data_type": "numeric(4,2)", "description": "Rental price of the film."},
+          {"column_name": "length", "data_type": "smallint", "description": "Length of the film in minutes."},
+          {"column_name": "rating", "data_type": "mpaa_rating", "description": "MPAA rating of the film."},
+          {"column_name": "actors", "data_type": "text", "description": "Concatenated string of actors' formatted names."}
+      ]
+    },
+    {
+      "view_name": "sales_by_film_category",
+      "description": "Shows total sales for each film category.",
+      "columns": [
+          {"column_name": "category", "data_type": "text", "description": "Film category."},
+          {"column_name": "total_sales", "data_type": "numeric", "description": "Total sales for the category."}
+      ]
+    },
+    {
+      "view_name": "sales_by_store",
+      "description": "Shows total sales for each store, including store location and manager name.",
+      "columns": [
+          {"column_name": "store", "data_type": "text", "description": "Store location (city, country)."},
+          {"column_name": "manager", "data_type": "text", "description": "Manager's full name."},
+          {"column_name": "total_sales", "data_type": "numeric", "description": "Total sales for the store."}
+      ]
+    },
+    {
+      "view_name": "staff_list",
+      "description": "Provides a list of staff members with their contact information and store association.",
+      "columns": [
+          {"column_name": "id", "data_type": "integer", "description": "Staff ID."},
+          {"column_name": "name", "data_type": "text", "description": "Staff member's full name."},
+          {"column_name": "address", "data_type": "text", "description": "Staff member's street address."},
+          {"column_name": "zip code", "data_type": "text", "description": "Staff member's postal code."},
+          {"column_name": "phone", "data_type": "text", "description": "Staff member's phone number."},
+          {"column_name": "city", "data_type": "text", "description": "Staff member's city."},
+          {"column_name": "country", "data_type": "text", "description": "Staff member's country."},
+          {"column_name": "sid", "data_type": "integer", "description": "Store ID associated with the staff member."}
+      ]
+    }
+  ],
+  "materialized_views": [
+    {
+      "view_name": "rental_by_category",
+      "description": "Materialized view showing total rentals for each film category.",
+      "columns": [
+          {"column_name": "category", "data_type": "text", "description": "Film category."},
+          {"column_name": "total_sales", "data_type": "numeric", "description": "Total sales for the category."}
+      ]
+    }
+  ],
+  "functions":[
+    {
+      "function_name": "film_in_stock",
+      "description": "Returns a set of inventory IDs for films that are in stock at a given store.",
+      "parameters": [
+        {"parameter_name": "p_film_id", "data_type": "integer", "description": "The ID of the film."},
+        {"parameter_name": "p_store_id", "data_type": "integer", "description": "The ID of the store."}
+      ],
+      "return_type": "SETOF integer",
+      "returns_set": true
+    },
+    {
+      "function_name": "film_not_in_stock",
+      "description": "Returns a set of inventory IDs for films that are NOT in stock at a given store.",
+      "parameters": [
+        {"parameter_name": "p_film_id", "data_type": "integer", "description": "The ID of the film."},
+        {"parameter_name": "p_store_id", "data_type": "integer", "description": "The ID of the store."}
+      ],
+      "return_type": "SETOF integer",
+      "returns_set": true
+    },
+    {
+      "function_name": "get_customer_balance",
+      "description": "Calculates the current balance for a customer up to a given date.",
+      "parameters": [
+        {"parameter_name": "p_customer_id", "data_type": "integer", "description": "The ID of the customer."},
+        {"parameter_name": "p_effective_date", "data_type": "timestamp with time zone", "description": "The date up to which to calculate the balance."}
+      ],
+      "return_type": "numeric"
+    },
+    {
+      "function_name": "inventory_held_by_customer",
+      "description": "Returns the customer ID who currently holds a given inventory item (if any).",
+      "parameters": [
+        {"parameter_name": "p_inventory_id", "data_type": "integer", "description": "The ID of the inventory item."}
+      ],
+      "return_type": "integer"
+    },
+    {
+      "function_name": "inventory_in_stock",
+      "description": "Checks if a given inventory item is currently in stock.",
+      "parameters": [
+        {"parameter_name": "p_inventory_id", "data_type": "integer", "description": "The ID of the inventory item."}
+      ],
+      "return_type": "boolean"
+    },
+    {
+      "function_name": "rewards_report",
+      "description": "Generates a report of customers who qualify for a rewards program based on their monthly purchases.",
+      "parameters": [
+        {"parameter_name": "min_monthly_purchases", "data_type": "integer", "description": "Minimum number of monthly purchases."},
+        {"parameter_name": "min_dollar_amount_purchased", "data_type": "numeric", "description": "Minimum dollar amount purchased monthly."}
+      ],
+      "return_type": "SETOF customer",
+      "returns_set": true
+    }
+  ],
+  "relationships": [
+    {
+      "from_table": "customer",
+      "from_column": "store_id",
+      "to_table": "store",
+      "to_column": "store_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "customer",
+      "from_column": "address_id",
+      "to_table": "address",
+      "to_column": "address_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "address",
+      "from_column": "city_id",
+      "to_table": "city",
+      "to_column": "city_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "city",
+      "from_column": "country_id",
+      "to_table": "country",
+      "to_column": "country_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "film",
+      "from_column": "language_id",
+      "to_table": "language",
+      "to_column": "language_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "film",
+      "from_column": "original_language_id",
+      "to_table": "language",
+      "to_column": "language_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "film_actor",
+      "from_column": "actor_id",
+      "to_table": "actor",
+      "to_column": "actor_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "film_actor",
+      "from_column": "film_id",
+      "to_table": "film",
+      "to_column": "film_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "film_category",
+      "from_column": "film_id",
+      "to_table": "film",
+      "to_column": "film_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "film_category",
+      "from_column": "category_id",
+      "to_table": "category",
+      "to_column": "category_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "inventory",
+      "from_column": "film_id",
+      "to_table": "film",
+      "to_column": "film_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "inventory",
+      "from_column": "store_id",
+      "to_table": "store",
+      "to_column": "store_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "payment",
+      "from_column": "customer_id",
+      "to_table": "customer",
+      "to_column": "customer_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "payment",
+      "from_column": "staff_id",
+      "to_table": "staff",
+      "to_column": "staff_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "payment",
+      "from_column": "rental_id",
+      "to_table": "rental",
+      "to_column": "rental_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "rental",
+      "from_column": "inventory_id",
+      "to_table": "inventory",
+      "to_column": "inventory_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "rental",
+      "from_column": "customer_id",
+      "to_table": "customer",
+      "to_column": "customer_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "rental",
+      "from_column": "staff_id",
+      "to_table": "staff",
+      "to_column": "staff_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "staff",
+      "from_column": "address_id",
+      "to_table": "address",
+      "to_column": "address_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "staff",
+      "from_column": "store_id",
+      "to_table": "store",
+      "to_column": "store_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "store",
+      "from_column": "manager_staff_id",
+      "to_table": "staff",
+      "to_column": "staff_id",
+      "relationship_type": "foreign key"
+    },
+    {
+      "from_table": "store",
+      "from_column": "address_id",
+      "to_table": "address",
+      "to_column": "address_id",
+      "relationship_type": "foreign key"
+    }
+  ]
+}
