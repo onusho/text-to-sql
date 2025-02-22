@@ -1,0 +1,499 @@
+{'question': "List all actors' first and last names.", 'query': 'SELECT first_name, last_name FROM actor;', 'explanation': "This query selects the first_name and last_name columns from the actor table, effectively listing all actors' first and last names."}
+--------------------------------------------------
+  first_name     last_name
+0   PENELOPE       GUINESS
+1       NICK      WAHLBERG
+2         ED         CHASE
+3   JENNIFER         DAVIS
+4     JOHNNY  LOLLOBRIGIDA
+--------------------------------------------------
+
+
+
+
+{'question': 'Show the titles of all films in the database.', 'query': 'SELECT title FROM film;', 'explanation': "This query selects the 'title' column from the 'film' table, which contains the titles of all films in the database."}
+--------------------------------------------------
+              title
+0  ACADEMY DINOSAUR
+1    ACE GOLDFINGER
+2  ADAPTATION HOLES
+3  AFFAIR PREJUDICE
+4       AFRICAN EGG
+--------------------------------------------------
+
+
+
+
+{'question': 'Get the names of all cities.', 'query': 'SELECT city FROM city', 'explanation': "This query selects the 'city' column from the 'city' table, which contains the names of all cities."}
+--------------------------------------------------
+                 city
+0  A Corua (La Corua)
+1                Abha
+2           Abu Dhabi
+3                Acua
+4               Adana
+--------------------------------------------------
+
+
+
+
+{'question': 'List all categories available for films.', 'query': 'SELECT name FROM category;', 'explanation': "The question asks for a list of all film categories. The category table contains the names of all categories in the 'name' column. Therefore, selecting the 'name' column from the category table will provide the answer."}
+--------------------------------------------------
+        name
+0     Action
+1  Animation
+2   Children
+3   Classics
+4     Comedy
+--------------------------------------------------
+
+
+
+
+{'question': 'Show the first name and last name of all customers.', 'query': 'SELECT first_name, last_name FROM customer;', 'explanation': 'This query selects the first_name and last_name columns from the customer table, effectively showing the first name and last name of all customers.'}
+--------------------------------------------------
+  first_name last_name
+0       MARY     SMITH
+1   PATRICIA   JOHNSON
+2      LINDA  WILLIAMS
+3    BARBARA     JONES
+4  ELIZABETH     BROWN
+--------------------------------------------------
+
+
+
+
+{'question': 'Show all films released in 2006.', 'query': 'SELECT film_id, title FROM film WHERE release_year = 2006', 'explanation': 'The query selects the film_id and title from the film table where the release_year is 2006.'}
+--------------------------------------------------
+   film_id                 title
+0      213            DATE SPEED
+1       20   AMELIE HELLFIGHTERS
+2       29    ANTITRUST TOMATOES
+3       41  ARSENIC INDEPENDENCE
+4       65      BEHAVIOR RUNAWAY
+--------------------------------------------------
+
+
+
+
+{'question': 'Find all actors with the last name "Smith."', 'query': "SELECT * FROM actor WHERE last_name = 'Smith';", 'explanation': "This query selects all columns from the 'actor' table where the 'last_name' column is equal to 'Smith'."}
+--------------------------------------------------
+Empty DataFrame
+Columns: [actor_id, first_name, last_name, last_update]
+Index: []
+--------------------------------------------------
+
+
+
+
+{'question': 'List all customers who are from the city of "New York."', 'query': "SELECT c.first_name, c.last_name\nFROM customer AS c\nJOIN address AS a ON c.address_id = a.address_id\nJOIN city AS ci ON a.city_id = ci.city_id\nWHERE ci.city = 'New York';", 'explanation': "The query joins the customer, address, and city tables to find customers residing in 'New York'. It selects the first and last names of these customers."}
+--------------------------------------------------
+Empty DataFrame
+Columns: [first_name, last_name]
+Index: []
+--------------------------------------------------
+
+
+
+
+{'question': 'Get all stores located in the country "India."', 'query': "SELECT s.store_id\nFROM store AS s\nJOIN address AS a ON s.address_id = a.address_id\nJOIN city AS c ON a.city_id = c.city_id\nJOIN country AS co ON c.country_id = co.country_id\nWHERE co.country = 'India';", 'explanation': 'The query joins the store, address, city, and country tables to find stores located in India. It selects the store_id from the store table where the country is India.'}
+--------------------------------------------------
+   store_id
+0        13
+1        18
+2        21
+3        27
+4        39
+--------------------------------------------------
+
+
+
+
+{'question': 'Show all films with a rental rate greater than $2.99.', 'query': 'SELECT film_id, title FROM film WHERE rental_rate > 2.99;', 'explanation': 'This query selects the film_id and title from the film table where the rental_rate is greater than 2.99.'}
+--------------------------------------------------
+   film_id             title
+0        2    ACE GOLDFINGER
+1        7   AIRPLANE SIERRA
+2        8   AIRPORT POLLOCK
+3       10  ALADDIN CALENDAR
+4       13       ALI FOREVER
+--------------------------------------------------
+
+
+
+
+{'question': 'How many films are there in each category?', 'query': 'SELECT c.name, count(fc.film_id) AS film_count\nFROM category c\nJOIN film_category fc ON c.category_id = fc.category_id\nGROUP BY c.name', 'explanation': 'This query joins the category and film_category tables on their respective category_id columns. It then groups the results by category name and counts the number of films in each category.'}
+--------------------------------------------------
+       name  film_count
+0    Sports         145
+1  Classics         147
+2       New         147
+3    Family         147
+4    Comedy         143
+--------------------------------------------------
+
+
+
+
+{'question': 'What is the total number of actors?', 'query': 'SELECT count(*) FROM actor;', 'explanation': "This query counts all rows in the 'actor' table, which directly corresponds to the total number of actors."}
+--------------------------------------------------
+   count
+0    200
+--------------------------------------------------
+
+
+
+
+{'question': 'Get the total payment received in June 2022.', 'query': "SELECT sum(amount) FROM payment WHERE payment_date >= '2022-06-01' AND payment_date < '2022-07-01';", 'explanation': "This query selects the sum of the amount column from the payment table where the payment_date is within June 2022 (greater than or equal to '2022-06-01' and less than '2022-07-01')."}
+--------------------------------------------------
+        sum
+0  10923.45
+--------------------------------------------------
+
+
+
+
+{'question': 'Find the total number of rentals made last month.', 'query': "SELECT count(*) FROM rental WHERE rental_date >= date_trunc('month', current_date - interval '1 month') AND rental_date < date_trunc('month', current_date);", 'explanation': 'This query counts the number of rentals within the last month. It filters the rental table by rental_date, selecting only those rentals where the rental_date falls within the range of the start of last month and the start of the current month.'}
+--------------------------------------------------
+   count
+0      0
+--------------------------------------------------
+
+
+
+
+{'question': 'How many films have a rating of "PG-13"?', 'query': "SELECT count(*) FROM film WHERE rating = 'PG-13'", 'explanation': "This query counts the number of films in the film table where the rating is equal to 'PG-13'."}
+--------------------------------------------------
+   count
+0    223
+--------------------------------------------------
+
+
+
+
+{'question': 'List all films along with their category names.', 'query': 'SELECT f.title AS film_title, c.name AS category_name\nFROM film f\nJOIN film_category fc ON f.film_id = fc.film_id\nJOIN category c ON fc.category_id = c.category_id;', 'explanation': 'This query retrieves the title of each film from the film table and the name of its category from the category table. It joins the film and category tables through the film_category table, which acts as a linking table in this many-to-many relationship.'}
+--------------------------------------------------
+             film_title category_name
+0   BAREFOOT MANCHURIAN        Horror
+1          BED HIGHBALL        Comedy
+2  BREAKFAST GOLDFINGER   Documentary
+3       ARMAGEDDON LOST        Family
+4           AFRICAN EGG       Foreign
+--------------------------------------------------
+
+
+
+
+{'question': 'Show all actors who appeared in the film "Inception."', 'query': "SELECT a.first_name, a.last_name\nFROM actor a\nJOIN film_actor fa ON a.actor_id = fa.actor_id\nJOIN film f ON fa.film_id = f.film_id\nWHERE f.title = 'Inception';", 'explanation': "This query retrieves the first and last names of all actors who appeared in the film 'Inception'. It joins the actor, film_actor, and film tables to link actors to their films and filters the results to only include actors who appeared in 'Inception'."}
+--------------------------------------------------
+Empty DataFrame
+Columns: [first_name, last_name]
+Index: []
+--------------------------------------------------
+
+
+
+
+{'question': 'Get a list of all customers and the films they have rented.', 'query': 'SELECT c.first_name, c.last_name, f.title\nFROM customer c\nJOIN rental r ON c.customer_id = r.customer_id\nJOIN inventory i ON r.inventory_id = i.inventory_id\nJOIN film f ON i.film_id = f.film_id;', 'explanation': 'This query joins the customer, rental, inventory, and film tables to retrieve the first name, last name of each customer and the title of the films they have rented. The customer and rental tables are joined on customer_id, the rental and inventory tables are joined on inventory_id, and the inventory and film tables are joined on film_id.'}
+--------------------------------------------------
+  first_name    last_name            title
+0      TOMMY      COLLAZO     FREAKY POCUS
+1     MANUEL      MURRELL    GRADUATE LORD
+2     ANDREW        PURDY    LOVE SUICIDES
+3    DELORES       HANSEN  IDOLS SNATCHERS
+4     NELSON  CHRISTENSON    MYSTIC TRUMAN
+--------------------------------------------------
+
+
+
+
+{'question': 'List all staff members along with the stores they work at.', 'query': 'SELECT s.first_name, s.last_name, st.store_id\nFROM staff AS s\nJOIN store AS st ON s.store_id = st.store_id;', 'explanation': 'This query retrieves the first name, last name from the staff table and the store id from the store table. It joins the staff and store tables on the store_id column to link staff members to their respective stores.'}
+--------------------------------------------------
+  first_name  last_name  store_id
+0      Tisha    DuBuque        23
+1     Warner     Hudson        25
+2     Lavone   O'Reilly        33
+3      Louie     Walter        18
+4   Domenica  Armstrong         3
+--------------------------------------------------
+
+
+
+
+{'question': 'Find all films rented by customer "John Doe."', 'query': "SELECT f.title\nFROM film f\nJOIN inventory i ON f.film_id = i.film_id\nJOIN rental r ON i.inventory_id = r.inventory_id\nJOIN customer c ON r.customer_id = c.customer_id\nWHERE c.first_name = 'John' AND c.last_name = 'Doe';", 'explanation': "This query joins the film, inventory, rental, and customer tables to find the films rented by a customer named John Doe. It selects the film title from the film table, joins it with the inventory table on film_id, then joins the inventory table with the rental table on inventory_id, and finally joins the rental table with the customer table on customer_id. The WHERE clause filters the results to only include rentals made by customers with the first name 'John' and the last name 'Doe'."}
+--------------------------------------------------
+Empty DataFrame
+Columns: [title]
+Index: []
+--------------------------------------------------
+
+
+
+
+{'question': 'Show the top 5 films rented the most across all stores.', 'query': 'SELECT f.title, COUNT(r.rental_id) AS rental_count\nFROM film f\nJOIN inventory i ON f.film_id = i.film_id\nJOIN rental r ON i.inventory_id = r.inventory_id\nGROUP BY f.title\nORDER BY rental_count DESC\nLIMIT 5;', 'explanation': 'This query joins the film, inventory, and rental tables to count the number of times each film has been rented. It then groups the results by film title, orders them by the rental count in descending order, and limits the output to the top 5 films.'}
+--------------------------------------------------
+                 title  rental_count
+0   BUCKET BROTHERHOOD            34
+1     ROCKETEER MOTHER            33
+2  RIDGEMONT SUBMARINE            32
+3        SCALAWAG DUCK            32
+4       FORWARD TEMPLE            32
+--------------------------------------------------
+
+
+
+
+{'question': 'List all customers who have rented films in both store 1 and store 2.', 'query': 'SELECT DISTINCT r.customer_id\nFROM rental r\nJOIN inventory i ON r.inventory_id = i.inventory_id\nWHERE i.store_id = 1\nINTERSECT\nSELECT DISTINCT r.customer_id\nFROM rental r\nJOIN inventory i ON r.inventory_id = i.inventory_id\nWHERE i.store_id = 2;', 'explanation': 'The query uses the INTERSECT operator to find the common customer IDs from two separate SELECT statements. The first SELECT statement retrieves all distinct customer IDs who have rented films from store 1. The second SELECT statement retrieves all distinct customer IDs who have rented films from store 2. The INTERSECT operator then returns only the customer IDs that appear in both result sets, effectively listing customers who have rented films in both store 1 and store 2. The rental and inventory tables are joined on inventory_id to link rentals to specific stores.'}
+--------------------------------------------------
+   customer_id
+0          184
+1           87
+2          477
+3          273
+4          550
+--------------------------------------------------
+
+
+
+
+{'question': 'Find all actors who have appeared in more than 10 films.', 'query': 'SELECT a.actor_id, a.first_name, a.last_name\nFROM actor a\nJOIN film_actor fa ON a.actor_id = fa.actor_id\nGROUP BY a.actor_id, a.first_name, a.last_name\nHAVING COUNT(fa.film_id) > 10;', 'explanation': 'This query joins the actor and film_actor tables on actor_id, groups the results by actor, and then filters for actors who have appeared in more than 10 films using the HAVING clause.'}
+--------------------------------------------------
+   actor_id first_name    last_name
+0       184   HUMPHREY      GARLAND
+1        87    SPENCER         PECK
+2        51       GARY      PHOENIX
+3        70   MICHELLE  MCCONAUGHEY
+4       190     AUDREY       BAILEY
+--------------------------------------------------
+
+
+
+
+{'question': 'Get a list of customers who have made more than 5 payments.', 'query': 'SELECT customer_id FROM payment GROUP BY customer_id HAVING count(*) > 5', 'explanation': 'This query groups the payments table by customer_id and then filters those groups to only include customer_ids where the count of payments is greater than 5.'}
+--------------------------------------------------
+   customer_id
+0          184
+1           87
+2          477
+3          273
+4          550
+--------------------------------------------------
+
+
+
+
+{'question': 'List all films that are in both the "Action" and "Comedy" categories.', 'query': "SELECT f.title\nFROM film f\nJOIN film_category fc1 ON f.film_id = fc1.film_id\nJOIN category c1 ON fc1.category_id = c1.category_id AND c1.name = 'Action'\nJOIN film_category fc2 ON f.film_id = fc2.film_id\nJOIN category c2 ON fc2.category_id = c2.category_id AND c2.name = 'Comedy';", 'explanation': "This query works by joining the film table to the film_category table twice, once for each category ('Action' and 'Comedy'). It then ensures that the film_id is present in both categories by joining on the film_id."}
+--------------------------------------------------
+               title
+0      CATCH AMISTAD
+1   DAUGHTER MADIGAN
+2    DISCIPLE MOTHER
+3  FIREHOUSE VIETNAM
+4      FERRIS MOTHER
+--------------------------------------------------
+
+
+
+
+{'question': 'Show all rentals made in the last 7 days.', 'query': "SELECT * FROM rental WHERE rental_date >= NOW() - INTERVAL '7 days';", 'explanation': "This query selects all columns from the 'rental' table where the 'rental_date' is within the last 7 days.  The NOW() function returns the current timestamp, and we subtract an interval of 7 days to get the cutoff date."}
+--------------------------------------------------
+Empty DataFrame
+Columns: [rental_id, rental_date, inventory_id, customer_id, return_date, staff_id, last_update]
+Index: []
+--------------------------------------------------
+
+
+
+
+{'question': 'Get all payments made in February 2022.', 'query': 'SELECT * FROM payment_p2022_02', 'explanation': 'The question asks for all payments made in February 2022. Since the payment table is partitioned by month, the query selects all columns from the payment_p2022_02 table, which contains the payments made in February 2022.'}
+--------------------------------------------------
+   payment_id  customer_id  staff_id  rental_id  amount  \
+0       16056          270         1        193    1.99   
+1       16075          278         1       1092    4.99   
+2       16077          279         2       1019    0.99   
+3       16078          280         1       1014    4.99   
+4       16103          294         1        595    1.99   
+
+                      payment_date  
+0 2022-02-03 01:49:30.663659+00:00  
+1 2022-02-14 16:08:09.981165+00:00  
+2 2022-02-09 21:43:26.740315+00:00  
+3 2022-02-06 00:01:36.023609+00:00  
+4 2022-02-02 05:00:37.577890+00:00  
+--------------------------------------------------
+
+
+
+
+{'question': 'List all films that have not been rented in the last 30 days.', 'query': "SELECT film.title\nFROM film\nWHERE film.film_id NOT IN (SELECT inventory.film_id FROM rental JOIN inventory ON rental.inventory_id = inventory.inventory_id WHERE rental_date >= NOW() - INTERVAL '30 days');", 'explanation': 'This query selects the titles of all films whose film_id does not appear in the subquery. The subquery selects the film_id from the inventory table for all rentals that occurred in the last 30 days. This effectively identifies all films that have not been rented in the last 30 days.'}
+--------------------------------------------------
+              title
+0  ACADEMY DINOSAUR
+1    ACE GOLDFINGER
+2  ADAPTATION HOLES
+3  AFFAIR PREJUDICE
+4       AFRICAN EGG
+--------------------------------------------------
+
+
+
+
+{'question': 'Find all customers who registered in the last 6 months.', 'query': "SELECT customer_id, first_name, last_name, email FROM customer WHERE create_date >= NOW() - INTERVAL '6 months';", 'explanation': "This query selects the customer_id, first_name, last_name, and email from the customer table where the create_date is within the last 6 months. The NOW() function returns the current timestamp, and the INTERVAL '6 months' subtracts 6 months from the current timestamp."}
+--------------------------------------------------
+Empty DataFrame
+Columns: [customer_id, first_name, last_name, email]
+Index: []
+--------------------------------------------------
+
+
+
+
+{'question': 'Show all staff members hired before January 1, 2020.', 'query': 'SELECT * FROM staff', 'explanation': "The table 'staff' does not contain information about when staff members were hired. Therefore, it is impossible to filter staff members based on their hiring date. Returning all staff members."}
+--------------------------------------------------
+   staff_id first_name  last_name  address_id  \
+0         0      Tisha    DuBuque          28   
+1         1     Warner     Hudson          45   
+2         2     Lavone   O'Reilly           6   
+3         3      Louie     Walter          28   
+4         4   Domenica  Armstrong           8   
+
+                                         email  store_id  active  \
+0          schneider9987@rosenbaumreichert.com        23    True   
+1                  hartmann1448@ratkehaley.com        25    True   
+2  mclaughlin3045@kleinwisokyandswaniawski.com        33    True   
+3               ondricka8612@baileykeebler.com        18    True   
+4                     walsh2658@corkeryinc.com         3    True   
+
+           username                                  password  \
+0      sina.corkery  8cb2237d0679ca88db6464eac60da96345513964   
+1           fay.kub  8cb2237d0679ca88db6464eac60da96345513964   
+2    gaston.wuckert  8cb2237d0679ca88db6464eac60da96345513964   
+3      lewis.damore  8cb2237d0679ca88db6464eac60da96345513964   
+4  jannette.effertz  8cb2237d0679ca88db6464eac60da96345513964   
+
+                       last_update picture  
+0 2022-05-16 15:13:11.793280+00:00    None  
+1 2022-05-16 15:13:11.793280+00:00    None  
+2 2022-05-16 15:13:11.793280+00:00    None  
+3 2022-05-16 15:13:11.793280+00:00    None  
+4 2022-05-16 15:13:11.793280+00:00    None  
+--------------------------------------------------
+
+
+
+
+{'question': 'List the top 3 customers who have spent the most in each country.', 'query': "WITH CustomerSpending AS (\n    SELECT\n        c.customer_id,\n        c.first_name || ' ' || c.last_name AS customer_name,\n        cy.country,\n        SUM(p.amount) AS total_spent,\n        ROW_NUMBER() OVER (PARTITION BY cy.country ORDER BY SUM(p.amount) DESC) AS customer_rank\n    FROM\n        customer AS c\n    JOIN\n        address AS a ON c.address_id = a.address_id\n    JOIN\n        city AS ci ON a.city_id = ci.city_id\n    JOIN\n        country AS cy ON ci.country_id = cy.country_id\n    JOIN\n        payment AS p ON c.customer_id = p.customer_id\n    GROUP BY\n        c.customer_id, customer_name, cy.country\n)\nSELECT\n    customer_id,\n    customer_name,\n    country,\n    total_spent\nFROM\n    CustomerSpending\nWHERE\n    customer_rank <= 3\nORDER BY\n    country, total_spent DESC;", 'explanation': 'This query first calculates the total spending of each customer in each country using a common table expression (CTE) called `CustomerSpending`. It joins the `customer`, `address`, `city`, `country`, and `payment` tables to link customers to their country and calculate their total spending. The `ROW_NUMBER()` window function is used to rank customers within each country based on their total spending. Finally, the query selects the customer ID, customer name, country, and total spending for the top 3 customers in each country based on the calculated rank.'}
+--------------------------------------------------
+   customer_id   customer_name         country  total_spent
+0          218      VERA MCCOY     Afghanistan        67.82
+1          176    JUNE CARROLL         Algeria       173.63
+2          441  MARIO CHEATHAM         Algeria       112.72
+3           69       JUDY GRAY         Algeria        96.75
+4          320  ANTHONY SCHWAB  American Samoa        71.80
+--------------------------------------------------
+
+
+
+
+{'question': 'Find the films that have been rented more times than the average number of rentals per film.', 'query': 'SELECT f.title\nFROM film f\nJOIN inventory i ON f.film_id = i.film_id\nJOIN rental r ON i.inventory_id = r.inventory_id\nGROUP BY f.film_id, f.title\nHAVING COUNT(r.rental_id) > (SELECT AVG(rental_count)\n                                FROM (SELECT COUNT(rental_id) AS rental_count\n                                      FROM rental\n                                      JOIN inventory ON rental.inventory_id = inventory.inventory_id\n                                      GROUP BY film_id) AS subquery);', 'explanation': 'This query first calculates the average number of rentals per film using a subquery. Then, it joins the film, inventory, and rental tables to count the number of rentals for each film. Finally, it filters the results to include only those films with a rental count greater than the calculated average.'}
+--------------------------------------------------
+              title
+0  EFFECT GLADIATOR
+1  BALLOON HOMEWARD
+2    VOYAGE LEGALLY
+3  BIKINI BORROWERS
+4     GARDEN ISLAND
+--------------------------------------------------
+
+
+
+
+{'question': "For each actor, show their name and the percentage of films they've acted in compared to the total films.", 'query': "SELECT\n  a.first_name || ' ' || a.last_name AS actor_name,\n  (COUNT(fa.film_id) * 100.0 / (SELECT COUNT(*) FROM film)) AS film_percentage\nFROM actor AS a\nJOIN film_actor AS fa\n  ON a.actor_id = fa.actor_id\nGROUP BY\n  a.actor_id, actor_name\nORDER BY\n  actor_name;", 'explanation': 'This query calculates the percentage of films each actor has acted in compared to the total number of films. It joins the actor and film_actor tables, groups the results by actor, and then calculates the percentage using the COUNT aggregate function and a subquery to get the total number of films.'}
+--------------------------------------------------
+         actor_name  film_percentage
+0        ADAM GRANT              1.8
+1       ADAM HOPPER              2.2
+2     ALAN DREYFUSS              2.7
+3  ALBERT JOHANSSON              3.3
+4      ALBERT NOLTE              3.1
+--------------------------------------------------
+
+
+
+
+{'question': 'Show the average payment amount for each customer.', 'query': 'SELECT customer_id, AVG(amount) AS average_payment_amount FROM payment GROUP BY customer_id;', 'explanation': 'This query selects the customer_id and calculates the average payment amount for each customer using the AVG aggregate function. The results are grouped by customer_id to provide the average payment amount for each individual customer.'}
+--------------------------------------------------
+   customer_id  average_payment_amount
+0          184                3.946522
+1           87                4.856667
+2          477                4.990000
+3          273                4.504286
+4          550                4.990000
+--------------------------------------------------
+
+
+
+
+{'question': 'List all actors who have appeared in at least one film in each category.', 'query': 'SELECT a.actor_id, a.first_name, a.last_name\nFROM actor a\nWHERE NOT EXISTS (\n    SELECT c.category_id\n    FROM category c\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM film_actor fa\n        JOIN film_category fc ON fa.film_id = fc.film_id\n        WHERE fa.actor_id = a.actor_id AND fc.category_id = c.category_id\n    )\n);', 'explanation': 'This query selects all actors who have appeared in at least one film in each category. It uses a double negative logic with nested NOT EXISTS clauses. The outer NOT EXISTS checks if there is any category for which the actor has not appeared in any film. If there is no such category, it means the actor has appeared in at least one film in each category.'}
+--------------------------------------------------
+   actor_id first_name     last_name
+0         3         ED         CHASE
+1         5     JOHNNY  LOLLOBRIGIDA
+2         7      GRACE        MOSTEL
+3         8    MATTHEW     JOHANSSON
+4         9        JOE         SWANK
+--------------------------------------------------
+
+
+
+
+{'question': 'Find customers who have rented more films this year than last year.', 'query': None, 'explanation': 'The database schema does not directly support year-based filtering on rental counts. The rental table stores rental_date, but there are no built-in functions or columns to easily extract the year and compare rental counts between years for each customer. Therefore, I cannot generate a query to fulfill this request.'}
+--------------------------------------------------
+Error executing query: Not an executable object: None
+'NoneType' object has no attribute 'iloc'
+--------------------------------------------------
+
+
+
+
+{'question': 'List the top 5 films with the highest revenue.', 'query': 'SELECT f.title, SUM(p.amount) AS revenue\nFROM film f\nJOIN inventory i ON f.film_id = i.film_id\nJOIN rental r ON i.inventory_id = r.inventory_id\nJOIN payment p ON r.rental_id = p.rental_id\nGROUP BY f.title\nORDER BY revenue DESC\nLIMIT 5;', 'explanation': 'This query joins the film, inventory, rental, and payment tables to calculate the revenue for each film. It groups the results by film title, orders them by revenue in descending order, and limits the output to the top 5 films.'}
+--------------------------------------------------
+               title  revenue
+0   TELEGRAPH VOYAGE   231.73
+1          WIFE TURN   223.69
+2          ZORRO ARK   214.69
+3  GOODFELLAS SALUTE   209.69
+4     SATURDAY LAMBS   204.72
+--------------------------------------------------
+
+
+
+
+{'question': 'For each customer, show the number of films rented in the last month compared to the previous month.', 'query': "WITH LastMonthRentals AS (\n    SELECT \n        customer_id,\n        COUNT(rental_id) AS last_month_rentals\n    FROM rental\n    WHERE rental_date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month')\n    AND rental_date < DATE_TRUNC('month', CURRENT_DATE)\n    GROUP BY customer_id\n),\nPreviousMonthRentals AS (\n    SELECT \n        customer_id,\n        COUNT(rental_id) AS previous_month_rentals\n    FROM rental\n    WHERE rental_date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '2 months')\n    AND rental_date < DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month')\n    GROUP BY customer_id\n)\n\nSELECT\n    COALESCE(lmr.customer_id, pmr.customer_id) AS customer_id,\n    COALESCE(lmr.last_month_rentals, 0) AS last_month_rentals,\n    COALESCE(pmr.previous_month_rentals, 0) AS previous_month_rentals\nFROM LastMonthRentals lmr\nFULL OUTER JOIN PreviousMonthRentals pmr ON lmr.customer_id = pmr.customer_id;\n", 'explanation': "The query calculates the number of films rented by each customer in the last month and the previous month. It uses common table expressions (CTEs) to group rentals by customer and month, and then joins these CTEs to compare the rental counts. A FULL OUTER JOIN is used to include all customers, even those who only rented in one of the months. COALESCE is used to handle cases where a customer didn't rent in a particular month, setting the rental count to 0."}
+--------------------------------------------------
+Empty DataFrame
+Columns: [customer_id, last_month_rentals, previous_month_rentals]
+Index: []
+--------------------------------------------------
+
+
+
+
+{'question': 'Show the names of customers who have rented every film in the "Action" category.', 'query': None, 'explanation': "The database schema does not directly support determining which customers have rented *every* film in a specific category. To achieve this, a complex query involving subqueries and potentially window functions would be needed to compare each customer's rentals against the complete list of films in the 'Action' category. The provided metadata lacks the necessary information to construct such a query effectively."}
+--------------------------------------------------
+Error executing query: Not an executable object: None
+'NoneType' object has no attribute 'iloc'
+--------------------------------------------------
+
+
+
+
+{'question': 'List customers who have rented the same film more than 3 times.', 'query': 'SELECT c.first_name, c.last_name, f.title, COUNT(r.rental_id) AS rental_count\nFROM customer c\nJOIN rental r ON c.customer_id = r.customer_id\nJOIN inventory i ON r.inventory_id = i.inventory_id\nJOIN film f ON i.film_id = f.film_id\nGROUP BY c.customer_id, f.film_id\nHAVING COUNT(r.rental_id) > 3;', 'explanation': 'This query joins the customer, rental, inventory, and film tables to link customers to the films they have rented. It then groups the results by customer and film and counts the number of rentals for each customer-film combination. Finally, it filters the results to only include customer-film combinations where the rental count is greater than 3.'}
+--------------------------------------------------
+Empty DataFrame
+Columns: [first_name, last_name, title, rental_count]
+Index: []
+--------------------------------------------------
+
+
+

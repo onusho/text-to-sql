@@ -1,0 +1,146 @@
+Database Metadata for Text-to-SQL Agent
+
+## Tables and Columns
+
+### public.country
+- country_id (integer) - Primary Key
+- country (text)
+- last_update (timestamp with time zone)
+
+### public.city
+- city_id (integer) - Primary Key
+- city (text)
+- country_id (integer) - Foreign Key -> country(country_id)
+- last_update (timestamp with time zone)
+
+### public.address
+- address_id (integer) - Primary Key
+- address (text)
+- address2 (text)
+- district (text)
+- city_id (integer) - Foreign Key -> city(city_id)
+- postal_code (text)
+- phone (text)
+- last_update (timestamp with time zone)
+
+### public.language
+- language_id (integer) - Primary Key
+- name (character(20))
+- last_update (timestamp with time zone)
+
+### public.category
+- category_id (integer) - Primary Key
+- name (text)
+- last_update (timestamp with time zone)
+
+### public.actor
+- actor_id (integer) - Primary Key
+- first_name (text)
+- last_name (text)
+- last_update (timestamp with time zone)
+
+### public.customer
+- customer_id (integer) - Primary Key
+- store_id (integer)
+- first_name (text)
+- last_name (text)
+- email (text)
+- address_id (integer) - Foreign Key -> address(address_id)
+- create_date (date)
+- last_update (timestamp with time zone)
+- active (boolean)
+
+### public.film
+- film_id (integer) - Primary Key
+- title (text)
+- description (text)
+- release_year (year)
+- language_id (integer) - Foreign Key -> language(language_id)
+- original_language_id (integer)
+- rental_duration (smallint)
+- rental_rate (numeric(4,2))
+- length (smallint)
+- replacement_cost (numeric(5,2))
+- rating (mpaa_rating)
+- special_features (text)
+- last_update (timestamp with time zone)
+- fulltext (tsvector)
+
+### public.film_actor
+- actor_id (integer) - Foreign Key -> actor(actor_id)
+- film_id (integer) - Foreign Key -> film(film_id)
+- last_update (timestamp with time zone)
+
+### public.film_category
+- film_id (integer) - Foreign Key -> film(film_id)
+- category_id (integer) - Foreign Key -> category(category_id)
+- last_update (timestamp with time zone)
+
+### public.inventory
+- inventory_id (integer) - Primary Key
+- film_id (integer) - Foreign Key -> film(film_id)
+- store_id (integer)
+- last_update (timestamp with time zone)
+
+### public.rental
+- rental_id (integer) - Primary Key
+- rental_date (timestamp with time zone)
+- inventory_id (integer) - Foreign Key -> inventory(inventory_id)
+- customer_id (integer) - Foreign Key -> customer(customer_id)
+- return_date (timestamp with time zone)
+- staff_id (integer)
+- last_update (timestamp with time zone)
+
+### public.payment
+- payment_id (integer) - Primary Key
+- customer_id (integer) - Foreign Key -> customer(customer_id)
+- staff_id (integer)
+- rental_id (integer) - Foreign Key -> rental(rental_id)
+- amount (numeric(5,2))
+- payment_date (timestamp with time zone)
+
+### public.staff
+- staff_id (integer) - Primary Key
+- first_name (text)
+- last_name (text)
+- address_id (integer) - Foreign Key -> address(address_id)
+- email (text)
+- store_id (integer)
+- active (boolean)
+- username (text)
+- password (text)
+- last_update (timestamp with time zone)
+- picture (bytea)
+
+### public.store
+- store_id (integer) - Primary Key
+- manager_staff_id (integer)
+- address_id (integer) - Foreign Key -> address(address_id)
+- last_update (timestamp with time zone)
+
+## Relationships
+- Each **city** belongs to a **country**.
+- Each **address** belongs to a **city**.
+- Each **customer** is linked to an **address** and a **store**.
+- Each **film** has a **language** and may have an **original language**.
+- Each **film** can belong to multiple **categories** and have multiple **actors**.
+- Each **inventory** record represents a **film** in a **store**.
+- Each **rental** is associated with a **customer**, **inventory item**, and **staff member**.
+- Each **payment** is linked to a **customer**, **rental**, and **staff member**.
+- Each **staff member** is assigned to a **store** and an **address**.
+- Each **store** is managed by a **staff member** and linked to an **address**.
+
+## Notes
+- **Many-to-Many Relationships**:
+  - `film_actor` bridges **film** and **actor**.
+  - `film_category` bridges **film** and **category**.
+- **One-to-Many Relationships**:
+  - `city` → `address`
+  - `customer` → `rental`
+  - `staff` → `rental`
+  - `inventory` → `rental`
+  - `customer` → `payment`
+  - `staff` → `payment`
+  - `rental` → `payment`
+- **Foreign Keys and Constraints** ensure data integrity between related tables.
+
