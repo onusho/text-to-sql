@@ -1,0 +1,7 @@
+Pinterest Blog (https://medium.com/pinterest-engineering/how-we-built-text-to-sql-at-pinterest-30bad30dabff)
+    simple approach
+    rag based approach to find the most relevant tables
+
+process
+    sql execution function
+    
