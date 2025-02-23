@@ -2,61 +2,13 @@
 
 A Flask-based web application that allows users to interact with the Paglia database using natural language queries based on AI agents to rewrite user questions, generate SQL queries, validate them, and display the results in a modern, chat-like interface.
 
-## Development Process
-
-1. Researched Existing Methods
-2. Metadata Generation
-3. Created a Database class that can connect and retrieve queries as Pandas Dataframes.
-4. Experimented with a Simple Approach and evaluated results.
-5. Built Custom AI Agents for different aspects of query generation
-   - Rewriter Agent : will check if the question makes sense and ask for clarifications, if it does then will generate a transformed detailed question that generator uses.
-   - Generator Agent : uses rewritten question to transform into queries, and can take risks by creating long complex queries.
-   - Validator Agent : checks for correctness of the generated query and optimizes.
-   - 
-
-## Application Workflow
-
-1. **Rewriting:** The RewriterAgent refines the user query for better SQL alignment.
-2. **Generation:** The GeneratorAgent converts the refined query into a SQL statement.
-3. **Validation:** The ValidatorAgent ensures the SQL query is correct and optimized.
-4. **Execution:** The Database class executes the validated SQL query and returns the results.
-
-## Technology Stack
-
-- **Backend:** Flask, PostgreSQL
-- **Frontend:** HTML, CSS, JavaScript 
-- **AI Integration:** Google Gemini API
-
-## Folder Structure
-
-```
-root
-│
-├── backend
-│   ├── agents.py
-│   ├── database.py
-│  
-│
-├── metadata
-│   ├── schema.json
-│   ├── schema_metadata.json
-│   └── schema_declaration.txt
-│
-├── templates
-│   └── index.html
-│
-├── app.py
-├── README.md
-└── .env
-```
-
 ## Installation
 
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/your-username/text-to-sql-app.git
-cd text-to-sql-app
+git clone https://github.com/your-username/text-to-sql.git
+cd text-to-sql
 ```
 
 2. **Create and Activate a Virtual Environment:**
@@ -78,7 +30,7 @@ pip install -r requirements.txt
 API_KEY=your_google_gemini_api_key
 ```
 
-5. **Configure the Database:** Ensure PostgreSQL is running locally with the following credentials:
+5. **Set up and Configure the Database:** Ensure PostgreSQL is running locally with the following credentials:
 
 - Host: localhost
 - Port: 5432
@@ -89,12 +41,40 @@ API_KEY=your_google_gemini_api_key
 Modify `backend/database.py` if your configuration differs.
 
 6. **Run the Application:**
-
 ```bash
+cd app
 python app.py
 ```
 
 7. **Access the Web Interface:** Open a browser and navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+## Development Process
+
+1. Researched Existing Methods
+2. *Metadata Generation* by extracting database metadata from PostgreSQL, and also fed that along with image diagram to Gemini to create descriptive data about tables, columns and their relationships.
+3. *Data Retrieval* by creating a `Database` class that can connect and retrieve queries as Pandas Dataframes.
+4. *Experimented with different approaches*, evaluated results and and settled on Agents.
+5. Built *Custom AI Agents* for different aspects of query generation
+   - *Rewriter Agent*: will check if the question makes sense and ask for clarifications, if it does then will generate a transformed detailed question that generator uses.
+   - *Generator Agent*: uses rewritten question to transform into queries, and can take risks by creating long complex queries.
+   - *Validator Agent*: checks for correctness of the generated query and optimizes.
+6. Created a Flask based simple *Web App* that can be used to interact with the databse.
+7. Evaluated all *evalution* questions and stored them in `.\evaluation_report.csv`
+
+## Application Workflow
+
+1. **Rewriting:** The RewriterAgent refines the user query for better SQL alignment and asks for clarification if needed.
+2. **Generation:** The GeneratorAgent converts the refined query into a SQL statement.
+3. **Validation:** The ValidatorAgent ensures the SQL query is correct and optimized.
+4. **Execution:** The Database class executes the validated SQL query and returns the results.
+
+## Technology Stack
+
+- **Backend:** Flask, PostgreSQL
+- **Frontend:** HTML, CSS, JavaScript 
+- **AI Integration:** Google Gemini API
+
+
 
 ## Usage
 
@@ -102,16 +82,8 @@ python app.py
 2. If prompted, provide additional clarification.
 3. View the generated SQL query and the resulting data table.
 
-## Example Query
+## Potential Improvements
 
-**Input:** "Show the top 5 products by sales in the last month."
-
-**Output:**
-
-- SQL Query: `SELECT product_name, SUM(sales_amount) AS total_sales FROM sales WHERE sale_date >= CURRENT_DATE - INTERVAL '30 days' GROUP BY product_name ORDER BY total_sales DESC LIMIT 5;`
-- Result: Displayed as an interactive table.
-
-## Contributing
-
-Contributions are welcome! Please submit a pull request or open an issue to discuss any changes.
-
+- An additional RAG system could be built to retrieve the most relavant tables using the metadata, instead of relying on giving huge amounts of metadata to Agents in on go, using historical and previous SQL query logs on the database.
+- Shorter and better Metadata should be generated, through emperical testing.
+- Table Augmented Generation (TAG) can be implemented on top of this after the database is retrieved to give the user insights about the retrieved tables.
