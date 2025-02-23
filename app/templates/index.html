@@ -14,14 +14,15 @@
 
         <div id="chat-box" class="chat-box mb-3 border rounded p-3 bg-white"></div>
 
-        <div id="query-box" class="query-box mb-3 border rounded p-3 bg-light"></div>
-
-        <div id="result-box" class="result-box mb-3 border rounded p-3 bg-light"></div>
-
+        
         <div class="input-group">
             <input type="text" id="user-input" class="form-control" placeholder="Ask something from the database..." />
             <button class="btn btn-primary" onclick="sendMessage()">Send</button>
         </div>
+        
+        <div id="query-box" class="query-box mb-3 border rounded p-3 bg-light"></div>
+        
+        <div id="result-box" class="result-box mb-3 border rounded p-3 bg-light"></div>
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

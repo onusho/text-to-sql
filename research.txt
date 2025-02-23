@@ -10,8 +10,8 @@ process
 
     schema extraction -> (schema + definitions + metadata generation)
     agents: 
-        main
         question rewriter
+        main
         validator
     results store
     flask frontend

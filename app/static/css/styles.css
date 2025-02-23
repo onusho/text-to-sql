@@ -12,6 +12,10 @@ body {
     padding: 20px;
 } */
 
+.input-group {
+    margin-bottom: 20px;
+}
+
 .chat-container {
     width: 900px;  /* Increase width */
     max-width: 100%;
