@@ -1,6 +1,6 @@
-# Text-to-SQL Application 
+# Text-to-SQL 
 
-A Flask-based web application that allows users to interact with the Paglia database using natural language queries based on AI agents to rewrite user questions, generate SQL queries, validate them, and display the results in a modern, chat-like interface. 
+A Flask-based web application that allows users to interact with the Paglia database on PostgreSQL using natural language queries based on AI agents to rewrite user questions, generate SQL queries, validate them, and display the results in a modern, chat-like interface. 
 
 ## Installation
 
@@ -32,6 +32,11 @@ API_KEY=your_google_gemini_api_key
 
 5. **Set up and Configure the Database:** Ensure PostgreSQL is running locally with the following credentials:
 
+```bash
+git clone https://github.com/devrimgunduz/pagila.git
+docker-compose up
+docker exec -it pagila psql -U postgres
+```
 - Host: localhost
 - Port: 5432
 - Database: postgres
