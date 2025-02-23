@@ -32,11 +32,11 @@ API_KEY=your_google_gemini_api_key
 
 5. **Set up and Configure the Database:** Ensure PostgreSQL is running locally with the following credentials:
 
-- Host: localhost
-- Port: 5432
-- Database: postgres
-- User: postgres
-- Password: 123456
+- Host: `localhost`
+- Port: `5432`
+- Database: `postgres`
+- User: `postgres`
+- Password: `123456`
 
 Modify `backend/database.py` if your configuration differs.
 
@@ -59,7 +59,7 @@ python app.py
    - *Generator Agent*: uses rewritten question to transform into queries, and can take risks by creating long complex queries.
    - *Validator Agent*: checks for correctness of the generated query and optimizes.
 6. Created a Flask based simple *Web App* that can be used to interact with the databse.
-7. Evaluated all *evalution* questions and stored them in `.\evaluation_report.csv`
+7. Evaluated all ***evalution*** questions and stored them in `.\evaluation_report.csv`
 
 ## Application Workflow
 
