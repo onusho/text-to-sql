@@ -5,6 +5,7 @@ A Flask-based web application that allows users to interact with the Paglia data
 ## Sample 
 [Sample](https://github.com/onusho/text-to-sql/blob/master/sample.gif)
 
+<img src="https://github.com/onusho/text-to-sql/blob/master/sample.gif?raw=true" width="400" height="250">
 
 ## Installation
 
