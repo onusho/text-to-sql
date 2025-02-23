@@ -83,7 +83,7 @@ python app.py
 3. View the generated SQL query and the resulting data table.
 
 ## Potential Improvements
-
+- Right now, it only works on Palgia Dataset but it could easily be generalized to work on any dataset, as metadata generation workflow can be automated.
 - An additional RAG system could be built to retrieve the most relavant tables using the metadata, instead of relying on giving huge amounts of metadata to Agents in on go, using historical and previous SQL query logs on the database.
 - Shorter and better Metadata should be generated, through emperical testing.
 - Table Augmented Generation (TAG) can be implemented on top of this after the database is retrieved to give the user insights about the retrieved tables.
