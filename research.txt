@@ -1,7 +1,20 @@
 Pinterest Blog (https://medium.com/pinterest-engineering/how-we-built-text-to-sql-at-pinterest-30bad30dabff)
     simple approach
-    rag based approach to find the most relevant tables
+    rag based approach to find the most relevant tables -> not needed
+    
+
 
 process
     sql execution function
     
+
+    schema extraction -> (schema + definitions + metadata generation)
+    agents: 
+        main
+        question rewriter
+        validator
+    results store
+    flask frontend
+    docker compose 
+
+
