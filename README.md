@@ -1,6 +1,6 @@
-# Text-to-SQL Application for Paglia Database
+# Text-to-SQL 
 
-A Flask-based web application that allows users to interact with the Paglia database using natural language queries based on AI agents to rewrite user questions, generate SQL queries, validate them, and display the results in a modern, chat-like interface.
+A Flask-based web application that allows users to interact with the Paglia database on PostgreSQL using natural language queries based on AI agents to rewrite user questions, generate SQL queries, validate them, and display the results in a modern, chat-like interface. 
 
 ## Installation
 
@@ -32,11 +32,16 @@ API_KEY=your_google_gemini_api_key
 
 5. **Set up and Configure the Database:** Ensure PostgreSQL is running locally with the following credentials:
 
-- Host: `localhost`
-- Port: `5432`
-- Database: `postgres`
-- User: `postgres`
-- Password: `123456`
+```bash
+git clone https://github.com/devrimgunduz/pagila.git
+docker-compose up
+docker exec -it pagila psql -U postgres
+```
+- Host: localhost
+- Port: 5432
+- Database: postgres
+- User: postgres
+- Password: 123456
 
 Modify `backend/database.py` if your configuration differs.
 
@@ -83,7 +88,7 @@ python app.py
 3. View the generated SQL query and the resulting data table.
 
 ## Potential Improvements
-
+- Right now, it only works on Palgia Dataset but it could easily be generalized to work on any dataset, as metadata generation workflow can be automated.
 - An additional RAG system could be built to retrieve the most relavant tables using the metadata, instead of relying on giving huge amounts of metadata to Agents in on go, using historical and previous SQL query logs on the database.
 - Shorter and better Metadata should be generated, through emperical testing.
 - Table Augmented Generation (TAG) can be implemented on top of this after the database is retrieved to give the user insights about the retrieved tables.
