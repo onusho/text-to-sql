@@ -40,7 +40,7 @@ class Agent(ABC):
             contents=prompt,
             config=self.config
         ).text
-        return self.format_response(response_text)
+        return self.get_dictionary(self.format_response(response_text))
     
     def get_information(self):
         with open(r"..\metadata\scheme_metadata.json", "r") as file:
@@ -70,9 +70,12 @@ class Agent(ABC):
     def format_response(self, text : str):
         return text[text.index('{') : text.index('}') + 1]
 
-    def get_dictionary(self, text : str):
+    def get_dictionary(self, text : str) -> dict:
         return json.loads(text)
-
+    
+    def get_string(self, dictionary : dict) -> str:
+        return str(dictionary)
+    
 class RewriterAgent(Agent):
     def run(self, input_data: dict) -> dict:
         """
@@ -91,6 +94,7 @@ class RewriterAgent(Agent):
         Your rewritten queries will be used for **Text-to-SQL generation**, so they must align well with the given database schema.
 
         == Guidelines for Rewriting:
+        - If the user question doesn't provide enough information or is irrelevant, ask the user to clarify in "rewritten" and return "0" in "valid".
         - Clarify vague terms (e.g., "recent" → "last 30 days", "best-selling" → "highest sales in USD").
         - Explicitly state filters (e.g., "top customers" → "customers with the highest total purchases").
         - Resolve pronouns & implicit references (e.g., "their orders" → "orders placed by the specified customer").
@@ -108,8 +112,9 @@ class RewriterAgent(Agent):
 
         == Response Format (JSON):
         {{
-            "question": "original user question as it is",
-            "rewritten": "Your rewritten, contextually clear question that aligns with the schema and retains the original meaning."
+            "valid": "if the question if valid then return '1', if question if invalid return '0'
+            "question": "Your rewritten, contextually clear question that aligns with the schema and retains the original meaning, if question was not valid then simple return empty string"
+            'clarification' : "if invalid then ask the user for clarification otherwise return empty string" 
         }}
         """
 
@@ -122,7 +127,9 @@ class GeneratorAgent(Agent):
         takes question and returns sql query
         
         input_data = {
-            'question' : 'question + rewritten question'
+            'valid' : "0" or "1",
+            'question' : 'rewritten question if valid question was asked other wise return empty string',
+            'clarification' : "if invalid then ask the user for clarification otherwise return empty string" 
         }
         """
         return super().run(input_data)
@@ -146,16 +153,12 @@ class GeneratorAgent(Agent):
         - **Ensure the query is well-formatted and syntactically valid**.
         - Always return a structured JSON response in the format below.
 
-        === Original User Question:
+        === User Question:
         {values['question']}
-        
-        === Clarified and Rewritten User Question:
-        {values['rewritten']}
         
         === Response Format:
         {{  
-            "question": "User question",
-            "rewritten": "rewritten user question",
+            "question": "User Question",
             "query": "Generated SQL query or null if impossible",
             "explanation": "Detailed reasoning behind the generated query",
         }}
@@ -201,9 +204,6 @@ class ValidatorAgent(Agent):
     
         === User Question:
         {values['question']}
-        
-        === Rewritten User Question:
-        {values['rewritten']}
 
         === Generated Query for Validation:
         {values['query']}
@@ -214,7 +214,6 @@ class ValidatorAgent(Agent):
         === Response Format:
         {{  
             "question": "User question",
-            "rewritten": "Rewritten User Question:,
             "query": "Revised query if the original is incorrect or Original generated SQL query if orignal is correct",
             "explanation": "Detailed reasoning for validation results",
         }}

@@ -16,7 +16,7 @@ class Database:
     def connect_to_db(self):
         return create_engine(f"postgresql://{self.params['user']}:{self.params['password']}@{self.params['host']}:{self.params['port']}/{self.params['database']}")
         
-    def fetch_query(self, query):
+    def get_data(self, query):
         """returns dataframe"""
         try:
             df = pd.read_sql(query, self.connection)
