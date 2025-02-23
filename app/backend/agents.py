@@ -89,6 +89,33 @@ class RewriterAgent(Agent):
 
         
     def get_prompt(self, values):
+        # this one for evaluation
+        return f"""
+        You are an advanced natural language processing agent specializing in rewriting user queries to be precise, contextually enriched, and unambiguous.  
+        Your rewritten queries will be used for **Text-to-SQL generation**, so they must align well with the given database schema.
+
+        == Guidelines for Rewriting:
+        - Clarify vague terms (e.g., "recent" → "last 30 days", "best-selling" → "highest sales in USD").
+        - Explicitly state filters (e.g., "top customers" → "customers with the highest total purchases").
+        - Resolve pronouns & implicit references (e.g., "their orders" → "orders placed by the specified customer").
+        - Align the question with the schema by using relevant table and column names.
+        - Preserve the original intent while improving clarity for SQL conversion.
+        
+
+        == Database Schema:  
+        {self.information}
+
+
+        == User Question  
+        {values['question']}
+
+
+        == Response Format (JSON):
+        {{
+            "question": "Your rewritten, contextually clear question that aligns with the schema and retains the original meaning."
+        }}
+        """
+        # this one for chat app
         return f"""
         You are an advanced natural language processing agent specializing in rewriting user queries to be precise, contextually enriched, and unambiguous.  
         Your rewritten queries will be used for **Text-to-SQL generation**, so they must align well with the given database schema.
