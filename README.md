@@ -1,10 +1,8 @@
 # Text-to-SQL 
 
-A Flask-based web application that allows users to interact with the Paglia database on PostgreSQL using natural language queries based on AI agents to rewrite user questions, generate SQL queries, validate them, and display the results in a modern, chat-like interface. 
+A Flask-based web application that allows users to interact with the Paglia database on PostgreSQL using natural language queries based on AI agents to rewrite user questions, generate SQL queries, validate them, and display the results in a modern, chat-like interface.  
 
-## Sample 
-[](https://github.com/onusho/text-to-sql/blob/master/sample.gif)
-
+https://github.com/user-attachments/assets/1706f402-6b54-495e-8836-d094314b86ed
 
 ## Installation
 
